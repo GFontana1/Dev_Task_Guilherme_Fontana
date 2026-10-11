@@ -1,0 +1,57 @@
+A. Problems with the screen
+
+    1 - No CVC/CVV field:
+            Depending on the payment provider and transaction flow, it may prevent the
+            transaction from being processed or reduce the ability to verify the card.
+
+    2 - Missing currency:
+            The "Payment Amount" displays "30.00" but lacks a currency symbol, like
+            BRL or USD, which creates ambiguity for international users.
+
+    3 - Restrictive input formatting:
+            The UI prompts the user to enter the Card Number with "No dashes or spaces"
+            and the Postal Code with "no dashes", pushing the formatting burden onto the
+            user. A modern UI should auto-format and clean the inputs on the backend.
+
+    4 - No country selection:
+            Since the company is global, its clients will have international billing
+            addresses. But the form lacks a "Country" field, which makes the "State or 
+            Province" field broken or simply irrelevant for users that are not from
+            the company home country.
+
+
+B. Sample Test Cases
+
+    1 - Test Case of the validation for mandatory fields
+            
+            Action: Click the "Continue" button without entering data into any fields
+            
+            Expected Result: The system prevents submission and displays clear, localized 
+            error messages next to all fields marked with a red asterisk (*).
+
+    2- Test Case of acceptance for international postal codes
+
+        Action: Enter an alphanumeric international postal code containing a dash, such
+        as a BR postcode like "45625-520", into the Postal Code field
+
+        Expected Result: The system accepts the input, overriding the arbitrary "(no dashes)"
+        limitation to support global customers.
+
+    3 - Test Case of numeric validation on card fields
+
+        Action: Attempt to type alphabetic characters or special symbols into the "Card Number" field.
+
+        Expected Result: The field restricts input to numeric values only, preventing the 
+        user from submitting invalid characters.
+
+
+C. Product solution for the most severe bug
+
+    I believe the most severe bug of the ones mentioned is the CVC/CVV one, since its abscence will
+    cause high rates of payment processing failures and leaves the system vulnerable to basic card fraud.
+
+    Solution:
+        Utilize a standard payment processing element (like Stripe) rather than building a custom form.
+        But, if the company decides to maintain the custom form, immediately add a numeric "Security
+        Code (CVV)" input field next to the Expiration Date, alongside a small tooltip icon demonstrating 
+        where to find the 3 or 4 digit code on the back (or front) of the card.

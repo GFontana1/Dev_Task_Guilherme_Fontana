@@ -1,0 +1,12 @@
+{
+  "name": "acme-form-automation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fill-form": "node src/fill-form.js"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}
